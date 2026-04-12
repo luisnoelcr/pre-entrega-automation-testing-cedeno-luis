@@ -12,11 +12,9 @@ def multiplicar(a, b):
 
 def dividir(a, b):
     """Divide dos numeros y retorna el resultado"""
-    try:
-        return a / b
-    except ZeroDivisionError:
-        print("Error: No se puede dividir por cero.")
-        return None
+    if b == 0:
+        raise ValueError("No se puede dividir por cero.")
+    return a / b
 
 def calculadora():
     """Funcion principal de la calculadora"""
@@ -44,8 +42,11 @@ def calculadora():
     elif opcion == "3":
         print(f"Resultado: {multiplicar(a, b)}")
     elif opcion == "4":
-        print(f"Resultado: {dividir(a, b)}")
+        resultado = dividir(a, b)
+        if resultado is not None:
+            print(f"Resultado: {resultado}")
     else:
         print("Error: Opcion no valida.")
 
-calculadora()
+if __name__ == "__main__":
+    calculadora()
