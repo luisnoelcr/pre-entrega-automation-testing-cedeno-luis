@@ -54,3 +54,35 @@ def test_sumar_retorna_numero():
 @pytest.mark.smoke
 def test_restar_basico():
     assert restar(10, 3) == 7
+
+#-- FIXTURE FLOTANTES ------------------
+
+@pytest.fixture
+def numeros_flotantes():
+    """Prepara un par de flotantes reutilizables en multiples tests."""
+    return 0.1, 0.2
+
+
+#-- TESTS MULTIPLICAR ------------------
+
+@pytest.mark.smoke
+def test_multiplicar_exito(numeros_enteros):
+    a, b = numeros_enteros
+    assert multiplicar(a, b) == 100
+
+@pytest.mark.smoke
+def test_multiplicar_flotantes(numeros_flotantes):
+    a, b = numeros_flotantes
+    assert multiplicar(a, b) == pytest.approx(0.02, rel=1e-4)
+
+
+#-- PARAMETRIZACION RESTAR ------------------
+
+@pytest.mark.smoke
+@pytest.mark.parametrize("a, b, esperado", [
+    (10, 3, 7),      # positivos
+    (-5, -2, -3),    # negativos
+    (0, 0, 0),       # caso limite
+])
+def test_restar_varios(a, b, esperado):
+    assert restar(a, b) == esperado
